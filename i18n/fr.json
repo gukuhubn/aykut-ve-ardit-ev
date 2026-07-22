@@ -90,7 +90,7 @@
   "model.presetK1": "Vue du sas : porte MAISON, V et K1 vitrée. Cliquez une porte.",
   "model.presetKus": "Vue de dessus : sas et vestiaire d'un coup d'œil — W1, banc, tour à chaussures et meuble miroir M1.",
   "model.sonra": "APRÈS — travée fermée : enduit, bande vitrée haute, grilles ; l'entrée se fait par K1 en tête d'escalier.",
-  "model.vAcik": "La porte V s'est ouverte DANS le vestiaire — le miroir est en face ; le vantail s'arrête sur butée à l'angle du W1, l'axe d'entrée reste libre.",
+  "model.vAcik": "La porte V s'ouvre VERS le vestiaire (charnières côté est) — le miroir est droit devant ; le vantail ouvert se range côté est, laissant libres l'axe d'entrée et l'armoire.",
   "model.vKapali": "Porte V fermée. Cliquez encore pour revoir l'ouverture.",
   "offline.cadNot": "Les fichiers CAO (DXF, mm, 1:1, R2010) sont téléchargeables à la même adresse.",
   "offline.pdfNot": "Les PDF ne sont pas intégrés à ce fichier — les liens ci-dessous les ouvrent/téléchargent depuis le portail en ligne (internet requis).",

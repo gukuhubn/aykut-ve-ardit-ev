@@ -67,11 +67,12 @@
   "door_V_mm": {
     "verified": false,
     "code_note": "Vestiyer kapisi. Onceki taslaklardaki 'D1' (dogu/merdiven kapisi) IPTAL edildi; V, sahanligin kuzey duvarindadir.",
-    "leaf_width": 930,
+    "leaf_width": 730,
     "leaf_height": 2100,
     "wall": "sahanlik kuzey duvari = vestiyer guney duvari",
-    "from_west_wall": 400,
-    "swing": "VESTIYERE ICE acilir; mentese BATI kasada. Kanat ~80 derecede stoper takozla W1 guney kosesine yaslanir (90 derece gerekmez; etkin gecis ~860 mm). Giris aksi (kapi -> ayna) bos kalir; kapi normalde kapali durur (isi tamponu).",
+    "from_west_wall": 620,
+    "size_note": "Faz 4.1 revizyonu: 930 -> 730 (standart kanat). Geometri lint'i 930 kanadin HICBIR mentese yonunde acilamadigini gosterdi: bolmenin vestiyer yuzu iki yandan mobilyayla kusatili (bati: W1 600 derinlik, dogu: ayakkabi kulesi) ve 830 net kanat her yayda birine carpiyor. 730 kanat + bosluk batisi W1 onune hizali (620) = dogu menteseyle 90 derece TAM engelsiz acilim.",
+    "swing": "VESTIYERE ICE acilir; mentese DOGU kasada (Faz 4.1 revizyonu — onceki bati mentese geometrik olarak imkansizdi: W1 600 derinlikle bolmeye bitisik oldugundan kanat ~18 derecede W1 guney yan panel kosesine carpardi). Dogu mentesede kanat 90 dereceye kadar engelsiz acilir ve dogu yanda park eder; giris aksi (kapi -> ayna) ve W1 erisimi bos kalir. Kapi normalde kapali durur (isi tamponu); 90 derecede kapi stopu.",
     "ud_max_w_m2k": 1.4
   },
   "infill_old_east_door_mm": {
@@ -210,19 +211,21 @@
       "mirror_recess_width": 450,
       "door_tower_width": 550,
       "door_tower_height": 2000,
+      "door_tower_front": "cift rayli SURME kapak, 2 panel (Faz 4.1: menteseli kanat — tek 530 veya cift 262 — her yonde bank kuzey kosesini tariyordu; surme supurmesizdir, on erisim korunur)",
       "corner_open_shelf_width": 350,
       "open_shelf_rows": 5,
-      "top_bridge_width": 1380,
-      "top_bridge_height": 500,
-      "top_bridge_level": 2000,
+      "top_bridge_width": 930,
+      "top_bridge_from_west": 1070,
+      "top_bridge_height": 400,
+      "top_bridge_level": 2100,
       "reveal_filler_mm": 30,
-      "note": "Aritmetik: 450 ayna + 550 kule + 350 raf + 30 dolgu cirpma = 1380."
+      "note": "Aritmetik: 450 ayna + 550 kule + 350 raf + 30 dolgu cirpma = 1380. Faz 4.1: ust kopru AYNA uzerinden cekildi (x 1070-2000, yalniz kule+raf ustu) ve alt kotu 2000 -> 2100 (h 500 -> 400): W1 kuzey kapak/ust kutu supurmeleri kopru altindan serbest gecer; ayna ustu acik kalir."
     },
     "axis_from_west": 870
   },
   "hardware_counts": {
     "verified": false,
-    "note": "Rev B adetleri W1 + B1 icindir: W1 2 modul 20 mentese, 2 Tandembox, kulplar, 6 kanca. M1 kule kapagi ve ayakkabi kulesi kapaginin mentese/kulplari kendi BoQ pozlarina DAHILDIR (ayri sayilmaz).",
+    "note": "Rev B adetleri W1 + B1 icindir: W1 2 modul 20 mentese, 2 Tandembox, kulplar, 6 kanca. M1 kulesi ve ayakkabi kulesi Faz 4.1'de SURME kapakli (her biri 1 cift-ray seti + 2 panel; mentese YOK) - donanimlari kendi BoQ pozlarina DAHILDIR (ayri sayilmaz).",
     "hinges_clip_top": 20,
     "tandembox_sets": 2,
     "pulls": 10,
@@ -263,7 +266,7 @@
   "swing_rationale": {
     "verified": false,
     "K1": "Merdiven uzerine DISA acilan kapi, kapiyi acan kisiyi merdiven bosluguna dogru iter ve kanat asagidan cikan birine carpar - dusme riski. K1 bu yuzden SAHANLIGA ICE acilir; kendinden kapanan mentese ruzgarda carpma riskini keser. Mentese kuzey kasadadir: acik kanat sahanligin kuzey duvarina yaslanir, ev kapisina ve gecise engel olmaz.",
-    "V": "Sahanlik dar (1400) oldugu icin V sahanliga degil VESTIYERE acilir; mentese bati kasada. Kanat ~80 derecede W1 guney kosesindeki stoper takoza yaslanir - tam 90 derece acilim gerekmez, etkin gecis ~860 mm yeterlidir. Giris aksini (kapi -> ayna) bos birakir; dogu menteshe secilseydi acik kanat ayakkabi kulesinin onunu kapatirdi. Iki kapinin ayni anda acilmasi durumunda kanatlar farkli hacimlerde kalir - carpisma yoktur.",
+    "V": "Sahanlik dar (1400) oldugu icin V sahanliga degil VESTIYERE acilir; mentese DOGU kasada (Faz 4.1 revizyonu). Onceki bati-mentese karari geometri lint'inde curutuldu: W1 gardirop 600 mm derinlikle bolmeye bitisiktir, bati menteseli kanat daha ~18 derecede W1 guney yan panel kosesine carpar (iddia edilen ~80 derece stoper fiziksel olarak var olamaz). Dogu mentesede kanat 90 dereceye kadar engelsizdir, acik kanat dogu yanda (bolme onu, x~1.28 duzlemi) park eder: giris aksi (kapi -> ayna) ve W1 kapaklari tamamen serbest kalir. Bedeli: kapi ACIKKEN ayakkabi kulesinin bati yarisinin onu gecici perdelenir - kabul edilebilir, cunku V normalde kapalidir (isi tamponu) ve AK kapagi sifir-supurmeli surmedir. Iki kapinin ayni anda acilmasi durumunda kanatlar farkli hacimlerde kalir - carpisma yoktur.",
     "ev_kapisi": "Mevcut hall kapisi degistirilmez; mevcut yonunde kalir (kapsam disi)."
   }
 }
