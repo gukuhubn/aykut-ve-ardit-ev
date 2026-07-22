@@ -1,0 +1,269 @@
+{
+  "meta": {
+    "project": "Sundurma -> Vestiyer Donusumu, Orange (84100), Vaucluse, France",
+    "revision": "B",
+    "date": "2026-07",
+    "note": "Single source of truth. Every group carries verified:false until laser site measurement (OLCU GUNU). Values in mm unless suffixed; levels in metres relative to TN +-0.00.",
+    "governing_rule": "Imalat oncesi yerinde olcu zorunludur - no fabrication from these nominal values.",
+    "circulation_rev_b": "Mevcut merdivenden cikilir -> K1 (yeni dis ruzgarlik kapisi, merdiven basi, sahanligin dogu kenari) -> SAHANLIK -> solda (guney) mevcut ev/hall kapisi, sagda (kuzey) vestiyer kapisi V; iki kapi sahanligin karsilikli duvarlarinda. Vestiyere guney duvarindan girilir; AYNA kuzey duvarda tam karsida. Eski dogu (merdiven tarafi) kapi boslugu IPTAL - orulur."
+  },
+  "levels_m": {
+    "verified": false,
+    "TN_driveway": 0.0,
+    "bay_slab_existing": 0.3,
+    "cellier": 0.6,
+    "porch_ffl_target": 1.2,
+    "landing_ffl_target": 1.25,
+    "vestiyer_ffl_target": 1.25,
+    "hall": 1.3,
+    "soffit_approx": 3.6,
+    "clear_height_min_required": 2.3,
+    "clear_height_model": 2.5
+  },
+  "bay_mm": {
+    "verified": false,
+    "note": "Kapatilan toplam hacim (eski sundurma gozu): ic 2000 x 4000. Rev B'de guney 1400'u sahanlik, 100'u ic bolme, kalan 2500 vestiyer.",
+    "interior_width": 2000,
+    "interior_length_total": 4000,
+    "wall_existing_thickness": 200,
+    "wall_new_thickness": 300,
+    "floor_raise": 950
+  },
+  "room_mm": {
+    "verified": false,
+    "note": "VESTIYER ic olculeri (Rev B). Giris guney duvarindan (sahanliktan).",
+    "interior_width": 2000,
+    "interior_length": 2500,
+    "wall_existing_thickness": 200,
+    "wall_new_thickness": 300,
+    "floor_raise": 950
+  },
+  "landing_mm": {
+    "verified": false,
+    "assumption": "Derinlik plandan okunamiyor - 1400 VARSAYIM; olcu gunu kesinlesir. PMR icin dar, mevcut yapi kisiti not edildi.",
+    "width_ew": 2000,
+    "depth_ns": 1400,
+    "partition_to_vestiyer_thickness": 100,
+    "partition_type": "hafif bolme: metal karkas + cift kat alcipan (kendin-yap; temel yuku yok)",
+    "doors": {
+      "east": "K1 (yeni dis kapi, merdiven basi)",
+      "north": "V (vestiyer kapisi)",
+      "south": "mevcut ev/hall kapisi (degismez, kapsam disi)",
+      "west": "mevcut cellier kapisi (degismez, kapsam disi)"
+    }
+  },
+  "door_K1_mm": {
+    "verified": false,
+    "code_note": "Onceki taslaklarda 'D3' olarak gecti; Rev B'de resmi adi K1 (ruzgarlik/tampon kapisi).",
+    "purpose": "Merdiven basi dis kapi: guvenlik (sokaktan dogrudan erisimi keser) + isi (sahanlik tampon olur)",
+    "leaf_width": 900,
+    "leaf_height": 2100,
+    "type": "camli, isi yalitimli (thermal-break) aluminyum tek kanat, RC2 kilit, kendinden kapanan mentese",
+    "uw_max_w_m2k": 1.6,
+    "swing": "SAHANLIGA ICE acilir (asla merdiven uzerine degil); mentese KUZEY kasada - kanat sahanligin kuzey duvarinin dogu ucuna yaslanir (V kapisi batiya kaydirildigi icin cakismaz)",
+    "threshold_mm": 20,
+    "permit_note": "Cephe gorunumu degisir: DP dosyasina eklenir (dosya verildiyse degisiklik bildirimi)"
+  },
+  "door_V_mm": {
+    "verified": false,
+    "code_note": "Vestiyer kapisi. Onceki taslaklardaki 'D1' (dogu/merdiven kapisi) IPTAL edildi; V, sahanligin kuzey duvarindadir.",
+    "leaf_width": 930,
+    "leaf_height": 2100,
+    "wall": "sahanlik kuzey duvari = vestiyer guney duvari",
+    "from_west_wall": 400,
+    "swing": "VESTIYERE ICE acilir; mentese BATI kasada. Kanat ~80 derecede stoper takozla W1 guney kosesine yaslanir (90 derece gerekmez; etkin gecis ~860 mm). Giris aksi (kapi -> ayna) bos kalir; kapi normalde kapali durur (isi tamponu).",
+    "ud_max_w_m2k": 1.4
+  },
+  "infill_old_east_door_mm": {
+    "verified": false,
+    "note": "Eski dogu (merdiven tarafi) kapi boslugu orulur - parpaing dolgu + iki yuz siva.",
+    "width": 930,
+    "height": 2100
+  },
+  "glazing_band_mm": {
+    "verified": false,
+    "assumption": "Dogu duvar GUNEY ucunda (ayakkabi kulesi ustu bolge, vestiyer ici z~1550-2550). Alt kot FFL ustu +2000. VARSAYIM: 1000 x 450 - kesin konum/kot ve nis bandiyla iliski OLCU GUNU kesinlesir.",
+    "width": 1000,
+    "height": 450,
+    "sill_level": 2000
+  },
+  "opening_D2_mm": {
+    "verified": false,
+    "note": "Cellier kapisi Rev B'de SAHANLIGIN bati duvarindadir (mevcut kapi, kapsam disi, cizimlerde gosterilir).",
+    "clear_width": 930,
+    "threshold_step": 0
+  },
+  "stair": {
+    "verified": false,
+    "risers": 9,
+    "riser_mm": 135,
+    "going_mm": 270,
+    "total_rise_mm": 1215,
+    "min_landing_mm": 900
+  },
+  "window_infill_mm": {
+    "verified": false,
+    "window": {
+      "width": 900,
+      "height": 1000
+    },
+    "hatch": {
+      "width": 800,
+      "height": 500
+    }
+  },
+  "footing_mm": {
+    "verified": false,
+    "width": 500,
+    "height": 250,
+    "min_depth_below_grade": 600,
+    "concrete_class": "C25/30",
+    "rebar": "4x HA10 + etriye"
+  },
+  "floor_option_a": {
+    "verified": false,
+    "sleeper_walls": 3,
+    "sleeper_length_mm": 2000,
+    "sleeper_height_mm": 600,
+    "sleeper_max_spacing_mm": 1000,
+    "void_min_mm": 400,
+    "vent_grilles": 2,
+    "screed_mm": [
+      50,
+      60
+    ],
+    "insulation_pu_mm": [
+      80,
+      100
+    ]
+  },
+  "thresholds_mm": {
+    "verified": false,
+    "max_single_step": 20,
+    "profile": "aluminyum termik (thermal-break) esik profili",
+    "outer_sill_slope_pct": 2,
+    "outer_sill_drip": true,
+    "seal": "EPDM conta + esik alti sizdirmazlik bandi",
+    "applies_to": [
+      "K1",
+      "V"
+    ],
+    "note": "K1 esiginde sahanlik kotu; V esiginde sahanlik-vestiyer ayni kot hedefi (+1.25) - esiksiz gecis; yerinde olcuyle kesinlesir"
+  },
+  "w1_mm": {
+    "verified": false,
+    "note": "Rev B: bati duvar 2500 -> 2 modul.",
+    "modules": 2,
+    "module_width": 1100,
+    "door_height": 1950,
+    "top_box_height_nominal": 450,
+    "plinth": 100,
+    "total_height": 2500,
+    "depth": 600,
+    "scribe_each_end": 75,
+    "run_total": 2350,
+    "internals": {
+      "A": "long hang, rail @1800",
+      "B": "double rail @950/@1850"
+    }
+  },
+  "b1_mm": {
+    "verified": false,
+    "note": "Rev B: dogu duvar - eski kapi boslugu oruldugu icin tam duvar kullanilir; bank kisaldi.",
+    "bench_run": 1600,
+    "bench_height": 450,
+    "bench_depth": 420,
+    "drawers": 2,
+    "cushion_thickness": 60,
+    "panel_top": 1850,
+    "hooks": 6,
+    "hooks_height_range": [
+      1700,
+      1750
+    ],
+    "niche_band": [
+      1850,
+      2350
+    ],
+    "niche_depth": 350,
+    "niche_bays": 3,
+    "top_filler": 150,
+    "shoe_tower_south_corner": {
+      "width": 550,
+      "depth": 350,
+      "height": 2350,
+      "pairs_capacity": 10
+    }
+  },
+  "mirror_mm": {
+    "verified": false,
+    "note": "Rev B: kuzey duvarda, V kapisi aksinda (x~870) - giren tam karsisinda gorur. Cevresi M1 unitesiyle dolapli; bati yani W1 kuzey yan paneli (kule sigmaz - cakisma onlendi).",
+    "width": 450,
+    "height": 1600,
+    "bottom_level": 250,
+    "frame": "black metal",
+    "surround": {
+      "unit_name": "M1",
+      "unit_width": 1380,
+      "unit_from_west": 620,
+      "depth": 300,
+      "mirror_recess_width": 450,
+      "door_tower_width": 550,
+      "door_tower_height": 2000,
+      "corner_open_shelf_width": 350,
+      "open_shelf_rows": 5,
+      "top_bridge_width": 1380,
+      "top_bridge_height": 500,
+      "top_bridge_level": 2000,
+      "reveal_filler_mm": 30,
+      "note": "Aritmetik: 450 ayna + 550 kule + 350 raf + 30 dolgu cirpma = 1380."
+    },
+    "axis_from_west": 870
+  },
+  "hardware_counts": {
+    "verified": false,
+    "note": "Rev B adetleri W1 + B1 icindir: W1 2 modul 20 mentese, 2 Tandembox, kulplar, 6 kanca. M1 kule kapagi ve ayakkabi kulesi kapaginin mentese/kulplari kendi BoQ pozlarina DAHILDIR (ayri sayilmaz).",
+    "hinges_clip_top": 20,
+    "tandembox_sets": 2,
+    "pulls": 10,
+    "hooks": 6,
+    "adjustable_feet": 14,
+    "led_strip_m": 2.0,
+    "led_driver": 1,
+    "sensor_switch": 1
+  },
+  "capacity": {
+    "verified": false,
+    "note": "WP2 kapasite tablosu - quantities.py capacity_check ile dogrulanir. Acik raf: M1 kose 5x0.35 + bench ustu nis 3x0.50; kapali: W1 2 modul + M1 kule/kopru + bank + ayakkabi kulesi.",
+    "long_coats": 8,
+    "short_coats_jackets": 12,
+    "hook_items": 6,
+    "shoe_pairs_daily_bench": 6,
+    "shoe_pairs_tower": 10,
+    "shoe_pairs_seasonal_top": 12,
+    "shelf_metres_open": 3.2,
+    "closed_storage_m3": 4.6
+  },
+  "thermal": {
+    "verified": false,
+    "wall_r_min": 3.0,
+    "floor_r_min": 3.0,
+    "ceiling_r_min": 4.5,
+    "wall_insulation_mm": 100,
+    "floor_pu_mm": [
+      80,
+      100
+    ],
+    "ceiling_insulation_mm": [
+      60,
+      100
+    ],
+    "partition_note": "Sahanlik-vestiyer bolmesi isitilan-isitilan arasi: yalitim gerekmez, ses icin 45mm mineral yun onerilir"
+  },
+  "swing_rationale": {
+    "verified": false,
+    "K1": "Merdiven uzerine DISA acilan kapi, kapiyi acan kisiyi merdiven bosluguna dogru iter ve kanat asagidan cikan birine carpar - dusme riski. K1 bu yuzden SAHANLIGA ICE acilir; kendinden kapanan mentese ruzgarda carpma riskini keser. Mentese kuzey kasadadir: acik kanat sahanligin kuzey duvarina yaslanir, ev kapisina ve gecise engel olmaz.",
+    "V": "Sahanlik dar (1400) oldugu icin V sahanliga degil VESTIYERE acilir; mentese bati kasada. Kanat ~80 derecede W1 guney kosesindeki stoper takoza yaslanir - tam 90 derece acilim gerekmez, etkin gecis ~860 mm yeterlidir. Giris aksini (kapi -> ayna) bos birakir; dogu menteshe secilseydi acik kanat ayakkabi kulesinin onunu kapatirdi. Iki kapinin ayni anda acilmasi durumunda kanatlar farkli hacimlerde kalir - carpisma yoktur.",
+    "ev_kapisi": "Mevcut hall kapisi degistirilmez; mevcut yonunde kalir (kapsam disi)."
+  }
+}

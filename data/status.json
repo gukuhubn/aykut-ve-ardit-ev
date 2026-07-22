@@ -1,0 +1,173 @@
+{
+  "generated_from": "git log",
+  "entries": [
+    {
+      "milestone": "M0",
+      "date": "20.07.2026",
+      "ozet": "Eldeki plan ve fotoğraflar düzenlendi, işe başlandı",
+      "ozet_en": "Inputs organised, work started",
+      "ozet_fr": "Documents de départ organisés, travail lancé"
+    },
+    {
+      "milestone": "M1",
+      "date": "20.07.2026",
+      "ozet": "Çizim hazırlığı tamamlandı",
+      "ozet_en": "Drawing groundwork done",
+      "ozet_fr": "Base de dessin prête"
+    },
+    {
+      "milestone": "M2",
+      "date": "20.07.2026",
+      "ozet": "Tasarım dosyasının ilk sayfaları: mevcut durum, plan ve ilk kesit",
+      "ozet_en": "First design pages: existing state, plan, first section",
+      "ozet_fr": "Premières pages : état existant, plan, première coupe"
+    },
+    {
+      "milestone": "M3",
+      "date": "20.07.2026",
+      "ozet": "Kesit, cephe görünüşü, iş sırası ve izin sayfaları eklendi",
+      "ozet_en": "Section, elevation, work sequence and permit pages added",
+      "ozet_fr": "Coupe, façade, séquence de travaux et pages autorisations"
+    },
+    {
+      "milestone": "M4",
+      "date": "20.07.2026",
+      "ozet": "Mobilya çizimleri, maliyet tablosu ve malzeme önerileri eklendi",
+      "ozet_en": "Furniture drawings, cost table and material suggestions added",
+      "ozet_fr": "Dessins du mobilier, tableau de coûts et matériaux"
+    },
+    {
+      "milestone": "M5",
+      "date": "20.07.2026",
+      "ozet": "İki sayfalık yönetici özeti hazırlandı (İngilizce)",
+      "ozet_en": "Two-page executive summary (English)",
+      "ozet_fr": "Résumé de deux pages (anglais)"
+    },
+    {
+      "milestone": "M6",
+      "date": "20.07.2026",
+      "ozet": "Tüm sayfalar gözden geçirildi — iki tam kontrol turu",
+      "ozet_en": "Full two-pass visual review",
+      "ozet_fr": "Relecture visuelle complète en deux passes"
+    },
+    {
+      "milestone": "M7",
+      "date": "20.07.2026",
+      "ozet": "İngilizce tasarım dosyası teslim edildi (14 sayfa + özet)",
+      "ozet_en": "English design pack delivered (14 pp + summary)",
+      "ozet_fr": "Dossier de conception anglais livré (14 p. + résumé)"
+    },
+    {
+      "milestone": "M8",
+      "date": "20.07.2026",
+      "ozet": "Türkçe belgeler için yazı altyapısı hazırlandı",
+      "ozet_en": "Type infrastructure for Turkish documents",
+      "ozet_fr": "Base typographique pour les documents turcs"
+    },
+    {
+      "milestone": "M9",
+      "date": "20.07.2026",
+      "ozet": "Tasarım dosyasının tamamı Türkçeye çevrildi (14 sayfa + özet)",
+      "ozet_en": "Whole pack translated to Turkish (14 pp + summary)",
+      "ozet_fr": "Dossier entièrement traduit en turc (14 p. + résumé)"
+    },
+    {
+      "milestone": "M10",
+      "date": "20.07.2026",
+      "ozet": "Marangoza verilecek imalat çizimleri hazırlandı (S-01…S-05)",
+      "ozet_en": "Fabrication drawings for the joiner (S-01…S-05)",
+      "ozet_fr": "Plans de fabrication pour le menuisier (S-01…S-05)"
+    },
+    {
+      "milestone": "M11",
+      "date": "20.07.2026",
+      "ozet": "Bilgisayar ortamında ölçekli teknik çizimler (CAD) hazırlandı",
+      "ozet_en": "Scaled CAD drawings produced",
+      "ozet_fr": "Plans CAO à l’échelle produits"
+    },
+    {
+      "milestone": "M12",
+      "date": "20.07.2026",
+      "ozet": "Keşif-metraj listesi ve teklif karşılaştırma dosyası hazırlandı",
+      "ozet_en": "Bill of quantities and quote-comparison file",
+      "ozet_fr": "Métré et dossier de comparaison de devis"
+    },
+    {
+      "milestone": "M13",
+      "date": "20.07.2026",
+      "ozet": "Ev sahibi rehberi hazırlandı: adım adım kontrol listeleri",
+      "ozet_en": "Owner's guide with step-by-step checklists",
+      "ozet_fr": "Guide du propriétaire avec listes de contrôle"
+    },
+    {
+      "milestone": "M14",
+      "date": "20.07.2026",
+      "ozet": "Türkçe belgelerin tamamı kontrol edildi ve tutarlılık doğrulandı",
+      "ozet_en": "All Turkish documents checked for consistency",
+      "ozet_fr": "Cohérence de tous les documents turcs vérifiée"
+    },
+    {
+      "milestone": "M16",
+      "date": "20.07.2026",
+      "ozet": "Tüm ölçüler tek listede toplandı; malzeme adetleri yeniden sayıldı (briket 120→330 düzeltildi, maliyet güncellendi)",
+      "ozet_en": "All dimensions gathered into one list; material counts recounted (blocks 120→330, costs updated)",
+      "ozet_fr": "Toutes les cotes réunies ; quantités recomptées (parpaings 120→330, coûts à jour)"
+    },
+    {
+      "milestone": "M17",
+      "date": "20.07.2026",
+      "ozet": "3 boyutlu model hazırlandı: oda içi + dış cephe (önce/sonra)",
+      "ozet_en": "3D model built: interior + before/after facade",
+      "ozet_fr": "Modèle 3D : intérieur + façade avant/après"
+    },
+    {
+      "milestone": "M18",
+      "date": "20.07.2026",
+      "ozet": "Bu proje sayfası (portal) kuruldu",
+      "ozet_en": "This project portal set up",
+      "ozet_fr": "Portail du projet mis en place"
+    },
+    {
+      "milestone": "M19",
+      "date": "20.07.2026",
+      "ozet": "Portalın kendini güncellemesi otomatiğe bağlandı",
+      "ozet_en": "Portal auto-update automated",
+      "ozet_fr": "Mise à jour automatique du portail"
+    },
+    {
+      "milestone": "M20",
+      "date": "20.07.2026",
+      "ozet": "Belediyeye verilecek Fransızca başvuru paftaları hazırlandı",
+      "ozet_en": "French planning sheets for the town hall",
+      "ozet_fr": "Planches DP pour la mairie"
+    },
+    {
+      "milestone": "M21",
+      "date": "20.07.2026",
+      "ozet": "Son kontroller yapıldı, tüm dosyalar teslim edildi",
+      "ozet_en": "Final checks; all files delivered",
+      "ozet_fr": "Derniers contrôles ; tous les fichiers livrés"
+    },
+    {
+      "milestone": "M25",
+      "date": "20.07.2026",
+      "ozet": "Ek doküman: sahanlık kapısı D3 kararı + eşik detayları (2 sayfa)",
+      "ozet_en": "Addendum: buffer door decision + threshold details (2 pp)",
+      "ozet_fr": "Annexe : décision porte tampon + détails de seuil (2 p.)"
+    },
+    {
+      "milestone": "M26",
+      "date": "20.07.2026",
+      "ozet": "Portal telefonda açılacak claude.ai adresinde yayımlandı",
+      "ozet_en": "Portal published at a phone-friendly claude.ai address",
+      "ozet_fr": "Portail publié à une adresse claude.ai lisible sur téléphone"
+    },
+    {
+      "milestone": "M27",
+      "date": "20.07.2026",
+      "ozet": "Bağımsız gözden geçirme turu: bulunan 17 kusur düzeltildi",
+      "ozet_en": "Independent review round: 17 findings fixed",
+      "ozet_fr": "Relecture indépendante : 17 points corrigés"
+    }
+  ]
+}

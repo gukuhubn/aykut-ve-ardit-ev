@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%230f2a43'/></svg>">
+<title>3B Model — Vestiyer (test sayfası)</title>
+<style>
+  html,body{margin:0;height:100%;font-family:system-ui,sans-serif}
+  #viewer{position:fixed;inset:0}
+  #bar{position:fixed;top:10px;left:10px;z-index:5;display:flex;gap:8px}
+  button{padding:8px 14px;border:0;border-radius:6px;background:#0f2a43;color:#fff;cursor:pointer}
+  #durum{position:fixed;bottom:10px;left:10px;right:10px;z-index:5;background:#fff;
+         padding:10px 14px;border-radius:8px;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+  #durum.acik{background:#eaf6ee}
+  .webgl-yok{padding:40px;text-align:center;font-size:18px}
+</style>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+</head>
+<body>
+<div id="viewer"></div>
+<div id="bar">
+  <button id="ic">İç mekân</button>
+  <button id="dis">Dış cephe</button>
+  <button id="cephe">Önce / Sonra</button>
+  <button id="kapi">Kapıyı aç/kapat</button>
+</div>
+<div id="durum">D1 kapalı. Kapıya tıklayın: içe açılım animasyonu güvenlik kararını gösterir.</div>
+<script type="module">
+import { initViewer } from './js/model.js';
+const api = await initViewer(document.getElementById('viewer'), document.getElementById('durum'));
+if (api) {
+  document.getElementById('ic').onclick = () => api.setMode('ic');
+  document.getElementById('dis').onclick = () => api.setMode('dis');
+  document.getElementById('cephe').onclick = () => api.toggleFacade();
+  document.getElementById('kapi').onclick = () => api.toggleDoor();
+}
+</script>
+</body>
+</html>
