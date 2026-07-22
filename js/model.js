@@ -38,7 +38,7 @@ function tileTexture() {
   const c = document.createElement('canvas'); c.width = c.height = 512;
   const g = c.getContext('2d');
   g.fillStyle = '#e8e0d2'; g.fillRect(0, 0, 512, 512);
-  g.strokeStyle = '#cfc6b4'; g.lineWidth = 3;
+  g.strokeStyle = '#c2b8a2'; g.lineWidth = 5;
   for (let i = 0; i <= 4; i++) {
     g.beginPath(); g.moveTo(i * 128, 0); g.lineTo(i * 128, 512); g.stroke();
     g.beginPath(); g.moveTo(0, i * 128); g.lineTo(512, i * 128); g.stroke();
@@ -53,7 +53,7 @@ function woodTexture(base, streak) {
   const c = document.createElement('canvas'); c.width = 256; c.height = 256;
   const g = c.getContext('2d');
   g.fillStyle = base; g.fillRect(0, 0, 256, 256);
-  g.strokeStyle = streak; g.globalAlpha = 0.25; g.lineWidth = 2;
+  g.strokeStyle = streak; g.globalAlpha = 0.5; g.lineWidth = 3;
   for (let i = 0; i < 22; i++) {
     const x = (i * 37) % 256;
     g.beginPath(); g.moveTo(x, 0);
@@ -172,7 +172,7 @@ export async function initViewer(container, statusEl, TXT) {
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;   // WP4: pozlama/okunurluk
-  renderer.toneMappingExposure = 1.12;
+  renderer.toneMappingExposure = 1.0;   // Faz 4.1: malzeme ayrımı için pozlama düşürüldü
   container.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
@@ -307,7 +307,7 @@ export async function initViewer(container, statusEl, TXT) {
     part.add(box(W - (vx0 + vw), H, pT, wallM, (vx0 + vw + W) / 2, H / 2, laD + pT / 2, 'bolme-dogu'));
     part.add(box(vw, H - vh, pT, wallM, vx0 + vw / 2, vh + (H - vh) / 2, laD + pT / 2, 'bolme-ust'));
     // kasa (meşe)
-    const oakTex = woodTexture('#9a7a55', '#7c5f41');
+    const oakTex = woodTexture('#8f6d47', '#6e5335');
     const oakM = new THREE.MeshStandardMaterial({ map: oakTex, roughness: 0.6 });
     part.add(box(0.05, vh, pT + 0.04, oakM, vx0 + 0.025, vh / 2, laD + pT / 2, 'V-kasa-bati'));
     part.add(box(0.05, vh, pT + 0.04, oakM, vx0 + vw - 0.025, vh / 2, laD + pT / 2, 'V-kasa-dogu'));
@@ -421,7 +421,7 @@ export async function initViewer(container, statusEl, TXT) {
     surgu.add(box(0.012, 0.12, 0.012, m(COL.brass, { metalness: 0.75, roughness: 0.3 }),
       stW / 4 + 0.11, 1.05, stD / 2 + 0.012, 'AK-surme-kulp-dogu'));
     tower.add(surgu);
-    tower.position.set(1.4 + stW / 2, 0, zV0 + stD / 2);
+    tower.position.set((W - stW) + stW / 2, 0, zV0 + stD / 2);  // doğu duvara bitişik (S-01 ile aynı)
     interior.add(tower);
 
     // ---- M1 ayna ünitesi (kuzey duvar): ayna + kapaklı kule + köşe rafları + köprü ----
@@ -505,11 +505,39 @@ export async function initViewer(container, statusEl, TXT) {
     const warmC = new THREE.PointLight(0xfff0dd, 18, 8, 2); warmC.position.set(0.87, H - 0.15, 3.3);
     warmB.castShadow = warmC.castShadow = true;
     interior.add(warmA, warmB, warmC);
-    interior.add(new THREE.AmbientLight(0xfff6ea, 0.5));
-    interior.add(new THREE.HemisphereLight(0xfffaf0, 0x8a7f6a, 0.35));
+    interior.add(new THREE.AmbientLight(0xfff6ea, 0.38));
+    interior.add(new THREE.HemisphereLight(0xfffaf0, 0x8a7f6a, 0.30));
 
     interior.userData.vPivot = vPivot;
     interior.userData.k1Pivot = k1Pivot;
+
+    // ---- 360° gezinme küreleri (WP-D): sahanlık / vestiyer ortası / K1 girişi ----
+    const kureM = () => new THREE.MeshStandardMaterial({
+      color: 0xffb45e, emissive: 0xff9d2e, emissiveIntensity: 1.5,
+      transparent: true, opacity: 0.85,
+    });
+    const KURELER = [
+      { id: 'sahanlik', pos: [0.62, 1.30, 0.72], bakis: [0.9, 1.25, 1.45] },
+      { id: 'vestiyer', pos: [1.00, 1.32, 2.65], bakis: [0.95, 1.30, 3.9] },
+      { id: 'k1giris',  pos: [1.74, 1.32, 0.70], bakis: [0.5, 1.15, 0.72] },
+    ];
+    const navKureler = grp('nav-kureler');
+    for (const k of KURELER) {
+      const s = new THREE.Mesh(new THREE.SphereGeometry(0.085, 24, 18), kureM());
+      s.position.set(...k.pos);
+      s.name = `nav-kure-${k.id}`;
+      s.userData.kure = k;
+      navKureler.add(s);
+      const halo = new THREE.Mesh(
+        new THREE.RingGeometry(0.10, 0.13, 28),
+        new THREE.MeshBasicMaterial({ color: 0xffc37a, transparent: true, opacity: 0.55, side: THREE.DoubleSide }));
+      halo.rotation.x = -Math.PI / 2;
+      halo.position.set(k.pos[0], 0.012, k.pos[2]);
+      halo.name = `nav-halo-${k.id}`;
+      navKureler.add(halo);
+    }
+    interior.add(navKureler);
+    interior.userData.navKureler = navKureler;
   }
 
   // ============ DIŞ CEPHE (ev bağlamıyla) ============
@@ -585,8 +613,8 @@ export async function initViewer(container, statusEl, TXT) {
     before.add(box(0.08, wallH, 1.5, bd, bayX1 - 0.04, wallH / 2, -0.75, 'goz-yan-duvar'));
     before.add(box(bayX1 - bayX0, 0.1, 1.5, bd, (bayX0 + bayX1) / 2, wallH - 0.05, -0.75, 'goz-tavan'));
     before.add(box(bayX1 - bayX0, 0.3, 1.5, m(0x6a5c50, { roughness: 1 }), (bayX0 + bayX1) / 2, 0.15, -0.75, 'goz-taban-030'));
-    before.add(box(0.5, 0.62, 0.5, m(0x2f6e4f, { roughness: 0.7 }), 0.85, 0.61, -0.65, 'cop-konteyner'));
-    before.add(box(0.5, 0.62, 0.5, m(0x8a8d20, { roughness: 0.7 }), 1.55, 0.61, -0.65, 'cop-konteyner'));
+    before.add(box(0.5, 0.62, 0.5, m(0x2f6e4f, { roughness: 0.7 }), 1.15, 0.61, -0.95, 'cop-konteyner'));
+    before.add(box(0.5, 0.62, 0.5, m(0x8a8d20, { roughness: 0.7 }), 1.80, 0.61, -0.60, 'cop-konteyner'));
     const bw = grp('pencere-parmaklikli');
     bw.add(box(0.66, 0.56, 0.04, m(0xe8e8e8, { roughness: 0.7 }), 0, 0, 0, 'parmaklik-pencere-cam'));
     for (let i = 0; i < 3; i++) bw.add(box(0.03, 0.56, 0.05, m(COL.iron), -0.18 + i * 0.18, 0, 0.01, 'parmaklik-demir'));
@@ -712,8 +740,8 @@ export async function initViewer(container, statusEl, TXT) {
       return [g, k];
     }),
     // AK sürme: süpürme hacmi SIFIR — bank ucu 100 mm oldugu icin mentese cozumu yok
-    { id: 'AK-surme', type: 'sliding', pivot: [1.4, zV0 + akT.depth * mm], closedDeg: 0,
-      swingSign: 1, leafLen: akT.width * mm, maxDeg: 0, y: [0, akT.height * mm],
+    { id: 'AK-surme', type: 'sliding', pivot: [W - akT.width * mm, zV0 + akT.depth * mm],
+      closedDeg: 0, swingSign: 1, leafLen: akT.width * mm, maxDeg: 0, y: [0, akT.height * mm],
       group: 'AK-surme-kapak',
       note: 'cift rayli bypass surme, 2 panel — bank ucuna carpma sorununun cozumu (Faz 4.1)' },
     // B1 çekmeceler: doğrusal açılım (Tandembox ~450 mm batıya)
@@ -780,15 +808,105 @@ export async function initViewer(container, statusEl, TXT) {
   let facadeAfter = true;
   let vOpen = false, vAnim = 0, vTarget = 0;
   let k1Open = false, k1Anim = 0, k1Target = 0;
+  let outsideWanted = true;          // vinyet görünürlüğü (preset kararı)
+  let pano = null;                   // 360° mod: {id, gizli:[mesh], saved:{...}}
 
   // WP4 kamera preset'leri
   const PRESETS = {
-    k1: { pos: [1.72, 1.85, 1.28], tgt: [0.55, 0.8, 0.25], ceil: true, fov: 70, out: true },
-    ayna: { pos: [0.87, 1.55, 1.62], tgt: [0.87, 1.2, 4.0], ceil: true, fov: 58, out: true },
-    kus: { pos: [1.0, 7.2, 2.6], tgt: [1.0, 0, 1.95], ceil: false, fov: 50, out: false },
+    k1: { pos: [0.30, 1.72, 0.24], tgt: [1.62, 0.95, 1.30], fov: 74, out: true },
+    ayna: { pos: [0.87, 1.55, 1.62], tgt: [0.87, 1.2, 4.0], fov: 58, out: true },
+    kus: { pos: [1.0, 7.2, 2.6], tgt: [1.0, 0, 1.95], fov: 50, out: false },
   };
 
+  // ---- WP-D: zoom-out kırpma referansları (dollhouse) ----
+  const byName = n => interior.getObjectByName(n);
+  const CLIP = {
+    guney: ['duvar-guney-bati', 'duvar-guney-dogu', 'duvar-guney-lento', 'kapi-ev-hall-mevcut'].map(byName),
+    bolme: ['bolme-duvari'].map(byName),
+    kuzey: ['duvar-kuzey'].map(byName),
+    bati: ['duvar-bati', 'kapi-kiler-mevcut', 'supurgelik-bati'].map(byName),
+    dogu: ['duvar-dogu', 'kapi-K1-kasa', 'kapi-K1-kanat-pivot'].map(byName),
+  };
+  const IC_MERKEZ = new THREE.Vector3(W / 2, 1.2, Lt / 2);
+  const setVis = (arr, v) => arr.forEach(o => { if (o) o.visible = v; });
+  function uygulaKirpma() {
+    // Kural: kamera bir duvarın DIŞINA geçtiyse o duvar (kapılarıyla) gizlenir;
+    // tavan yüksek/uzak kamerada gizlenir — iç mekân her mesafeden okunur.
+    if (mode !== 'ic' || pano) {
+      Object.values(CLIP).forEach(a => setVis(a, true));
+      if (ceilRef) ceilRef.visible = true;
+      interior.userData.outside.visible = (mode === 'ic') && outsideWanted;
+      return;
+    }
+    const cp = camera.position;
+    setVis(CLIP.guney, !(cp.z < -0.4));
+    setVis(CLIP.bolme, !(cp.z < -0.4));
+    setVis(CLIP.kuzey, !(cp.z > Lt + 0.4));
+    setVis(CLIP.bati, !(cp.x < -0.4));
+    const doguDisi = cp.x > W + 0.4;
+    setVis(CLIP.dogu, !doguDisi);
+    interior.userData.outside.visible = outsideWanted && !doguDisi;
+    if (ceilRef) ceilRef.visible = !(cp.y > 2.62 || cp.distanceTo(IC_MERKEZ) > 5.5);
+  }
+
+  // ---- WP-D: 360° panorama modu ----
+  const panoBtn = document.createElement('button');
+  panoBtn.id = 'pano-cikis';
+  panoBtn.type = 'button';
+  panoBtn.textContent = tt('model.panoCik', '⟲ Çık / Geri (ESC)');
+  panoBtn.hidden = true;
+  container.appendChild(panoBtn);
+
+  function enterPano(k) {
+    if (mode !== 'ic') return;
+    if (!pano) {
+      pano = { saved: {
+        pos: camera.position.clone(), tgt: controls.target.clone(), fov: camera.fov,
+        rotateSpeed: controls.rotateSpeed,
+      } };
+    } else if (pano.gizli) {
+      setVis(pano.gizli, true);
+    }
+    pano.id = k.id;
+    const kure = interior.getObjectByName(`nav-kure-${k.id}`);
+    const halo = interior.getObjectByName(`nav-halo-${k.id}`);
+    pano.gizli = [kure, halo];
+    setVis(pano.gizli, false);
+    camera.position.set(...k.pos);
+    const yon = new THREE.Vector3(...k.bakis).sub(new THREE.Vector3(...k.pos))
+      .normalize().multiplyScalar(0.012);
+    controls.target.set(k.pos[0] + yon.x, k.pos[1] + yon.y, k.pos[2] + yon.z);
+    camera.fov = 76; camera.updateProjectionMatrix();
+    controls.enableZoom = false; controls.enablePan = false;
+    controls.rotateSpeed = -0.35;              // sürükle = etrafına bak (panorama)
+    controls.update();
+    panoBtn.hidden = false;
+    if (statusEl) {
+      statusEl.textContent = tt(`model.pano_${k.id}`,
+        '360° görünüm — sürükleyerek etrafınıza bakın; "Çık" ya da ESC ile dönün.');
+      statusEl.classList.remove('acik');
+    }
+  }
+
+  function exitPano(sessiz) {
+    if (!pano) return;
+    if (pano.gizli) setVis(pano.gizli, true);
+    camera.position.copy(pano.saved.pos);
+    controls.target.copy(pano.saved.tgt);
+    camera.fov = pano.saved.fov; camera.updateProjectionMatrix();
+    controls.enableZoom = true; controls.enablePan = true;
+    controls.rotateSpeed = pano.saved.rotateSpeed;
+    controls.update();
+    pano = null;
+    panoBtn.hidden = true;
+    if (!sessiz && statusEl) statusEl.textContent = tt('model.panoBitti',
+      'Normal görünüme dönüldü. Kürelere tıklayarak 360° bakış alabilirsiniz.');
+  }
+  panoBtn.addEventListener('click', () => exitPano(false));
+  window.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') exitPano(false); });
+
   function applyMode(preset) {
+    exitPano(true);
     interior.visible = (mode === 'ic');
     exterior.visible = (mode === 'dis');
     if (mode === 'ic') {
@@ -796,12 +914,9 @@ export async function initViewer(container, statusEl, TXT) {
       camera.position.set(...p.pos);
       controls.target.set(...p.tgt);
       camera.fov = p.fov; camera.updateProjectionMatrix();
-      if (ceilRef) ceilRef.visible = p.ceil;
-      interior.userData.outside.visible = p.out;
+      outsideWanted = p.out;
       scene.background = new THREE.Color(0x2e2a26);
     } else {
-      if (ceilRef) ceilRef.visible = true;
-      interior.userData.outside.visible = true;
       camera.fov = 58; camera.updateProjectionMatrix();
       camera.position.set(1.4, 2.9, 8.6);
       controls.target.set(0.1, 2.0, 0.2);
@@ -809,6 +924,7 @@ export async function initViewer(container, statusEl, TXT) {
       exterior.userData.before.visible = !facadeAfter;
       exterior.userData.after.visible = facadeAfter;
     }
+    uygulaKirpma();
     controls.update();
   }
 
@@ -818,6 +934,9 @@ export async function initViewer(container, statusEl, TXT) {
     ptr.set(((ev.clientX - r.left) / r.width) * 2 - 1, -((ev.clientY - r.top) / r.height) * 2 + 1);
     ray.setFromCamera(ptr, camera);
     if (mode === 'ic') {
+      const kureHit = ray.intersectObject(interior.userData.navKureler, true)
+        .find(h => h.object.userData && h.object.userData.kure);
+      if (kureHit) return enterPano(kureHit.object.userData.kure);
       if (ray.intersectObject(interior.userData.vPivot, true).length) return toggleDoorV();
       if (ray.intersectObject(interior.userData.k1Pivot, true).length) return toggleDoorK1();
     } else if (facadeAfter) {
@@ -848,6 +967,7 @@ export async function initViewer(container, statusEl, TXT) {
   }
 
   const clock = new THREE.Clock();
+  let panoT = 0;
   function tick() {
     requestAnimationFrame(tick);
     const dt = clock.getDelta();
@@ -857,6 +977,13 @@ export async function initViewer(container, statusEl, TXT) {
     k1Anim += (k1Target - k1Anim) * Math.min(1, dt * 3.2);
     interior.userData.k1Pivot.rotation.y = k1Anim * (Math.PI / 2) * 0.96;      // 86.4° ≥ 85 kuralı
     exterior.userData.k1PivotExt.rotation.y = -k1Anim * (Math.PI / 2) * 0.96;  // sahanlığa İÇE
+    // nav küreleri hafif nabız (fark edilebilirlik)
+    panoT += dt;
+    const ps = 1 + 0.07 * Math.sin(panoT * 2.6);
+    interior.userData.navKureler.children.forEach(o => {
+      if (o.name.startsWith('nav-kure-')) o.scale.setScalar(ps);
+    });
+    uygulaKirpma();
     controls.update();
     renderer.render(scene, camera);
   }
@@ -878,6 +1005,27 @@ export async function initViewer(container, statusEl, TXT) {
     toggleDoorV,
     toggleDoorK1,
     setPreset(p) { if (mode !== 'ic') { mode = 'ic'; } applyMode(p); },
+    // QA/görsel tur kancası: kamerayı deterministik konumlandırır
+    debugCam(pos, tgt, fov) {
+      camera.position.set(...pos);
+      controls.target.set(...tgt);
+      if (fov) { camera.fov = fov; camera.updateProjectionMatrix(); }
+      controls.update();
+    },
+    enterPano(id) {
+      const s = interior.getObjectByName(`nav-kure-${id}`);
+      if (s) enterPano(s.userData.kure);
+    },
+    screenPos(name) {                    // QA: nesnenin ekran konumu (0..1)
+      const o = scene.getObjectByName(name);
+      if (!o) return null;
+      const v = new THREE.Vector3();
+      o.getWorldPosition(v);
+      v.project(camera);
+      return { x: (v.x + 1) / 2, y: (1 - v.y) / 2, z: v.z };
+    },
+    exitPano() { exitPano(false); },
+    panoAktif() { return pano ? pano.id : null; },
     resize,
   };
 }

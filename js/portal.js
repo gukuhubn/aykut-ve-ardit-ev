@@ -47,6 +47,7 @@ const durumEl = document.getElementById('model-durum');
 initViewer(document.getElementById('viewer'), durumEl, I18N).then(a => {
   api = a;
   if (!api) return;
+  window.__VESTIYER_API = api;   // QA/görsel tur kancası
   const btnIc = document.getElementById('btn-ic');
   const btnDis = document.getElementById('btn-dis');
   const btnCephe = document.getElementById('btn-cephe');
@@ -74,6 +75,38 @@ initViewer(document.getElementById('viewer'), durumEl, I18N).then(a => {
     durumEl.textContent = { k1: t('model.presetK1'), ayna: t('model.presetAyna'), kus: t('model.presetKus') }[b.dataset.preset];
   });
 });
+
+// ---- fotoreal galeri (WP-F) ----
+(async () => {
+  let R = window.VESTIYER_RENDERS;
+  if (!R) {
+    try { R = await (await fetch('renders/manifest.json')).json(); } catch (e) { R = null; }
+  }
+  const kok = window.VESTIYER_RENDERS_BASE || 'renders/';
+  const galeri = document.getElementById('render-galeri');
+  if (!galeri) return;
+  if (!R || !R.items || !R.items.length) {
+    galeri.innerHTML = `<p class="not">${t('render.yok')}</p>`;
+    return;
+  }
+  for (const it of R.items) {
+    const fig = document.createElement('figure');
+    fig.className = 'render-cift';
+    const a1 = document.createElement('a'); a1.href = kok + it.model_kare; a1.target = '_blank';
+    const i1 = document.createElement('img'); i1.loading = 'lazy'; i1.src = kok + it.model_kare;
+    i1.alt = t('render.model'); a1.append(i1);
+    const a2 = document.createElement('a'); a2.href = kok + it.foto; a2.target = '_blank';
+    const i2 = document.createElement('img'); i2.loading = 'lazy'; i2.src = kok + it.foto;
+    i2.alt = t('render.foto'); a2.append(i2);
+    const cap = document.createElement('figcaption');
+    cap.textContent = t('render.k_' + it.ad);
+    const rozet = document.createElement('div');
+    rozet.className = 'render-rozet';
+    rozet.innerHTML = `<span>${t('render.model')}</span><span>${t('render.foto')}</span>`;
+    fig.append(rozet, a1, a2, cap);
+    galeri.append(fig);
+  }
+})();
 
 // ---- süreç adımları ----
 const FAZLAR = I18N.fazlar;

@@ -237,7 +237,7 @@
   },
   "capacity": {
     "verified": false,
-    "note": "WP2 kapasite tablosu - quantities.py capacity_check ile dogrulanir. Acik raf: M1 kose 5x0.35 + bench ustu nis 3x0.50; kapali: W1 2 modul + M1 kule/kopru + bank + ayakkabi kulesi.",
+    "note": "WP2 kapasite tablosu - quantities.py capacity_check ile dogrulanir. Acik raf: M1 kose 5x0.35 + bench ustu nis 3x0.50; kapali: W1 2 modul + M1 kule/kopru + bank + ayakkabi kulesi. Faz 4.1: ust kopru 930x400@2100 kucultuldu -> kapali hacim 4.6 -> 4.5 m3.",
     "long_coats": 8,
     "short_coats_jackets": 12,
     "hook_items": 6,
@@ -245,7 +245,7 @@
     "shoe_pairs_tower": 10,
     "shoe_pairs_seasonal_top": 12,
     "shelf_metres_open": 3.2,
-    "closed_storage_m3": 4.6
+    "closed_storage_m3": 4.5
   },
   "thermal": {
     "verified": false,

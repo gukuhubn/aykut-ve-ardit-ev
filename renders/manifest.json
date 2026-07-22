@@ -1,0 +1,48 @@
+{
+ "model": "gemini-3-pro-image",
+ "items": [
+  {
+   "ad": "ic_k1",
+   "model_kare": "ic_k1_model.png",
+   "foto": "ic_k1_foto.png",
+   "uretici": "gemini-3-pro-image"
+  },
+  {
+   "ad": "ic_ayna",
+   "model_kare": "ic_ayna_model.png",
+   "foto": "ic_ayna_foto.png",
+   "uretici": "gemini-3-pro-image"
+  },
+  {
+   "ad": "ic_ayna_v_acik",
+   "model_kare": "ic_ayna_v_acik_model.png",
+   "foto": "ic_ayna_v_acik_foto.png",
+   "uretici": "gemini-3-pro-image"
+  },
+  {
+   "ad": "ic_kus",
+   "model_kare": "ic_kus_model.png",
+   "foto": "ic_kus_foto.png",
+   "uretici": "gemini-3-pro-image"
+  },
+  {
+   "ad": "dis_sonra_on",
+   "model_kare": "dis_sonra_on_model.png",
+   "foto": "dis_sonra_on_foto.png",
+   "uretici": "gemini-3-pro-image"
+  },
+  {
+   "ad": "dis_sonra_bati_45",
+   "model_kare": "dis_sonra_bati_45_model.png",
+   "foto": "dis_sonra_bati_45_foto.png",
+   "uretici": "gemini-3-pro-image"
+  },
+  {
+   "ad": "dis_once_on",
+   "model_kare": "dis_once_on_model.png",
+   "foto": "dis_once_on_foto.png",
+   "uretici": "gemini-3-pro-image"
+  }
+ ],
+ "hatalar": []
+}
