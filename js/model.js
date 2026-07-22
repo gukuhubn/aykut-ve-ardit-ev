@@ -245,18 +245,8 @@ export async function initViewer(container, statusEl, TXT) {
     const k1z0 = 0.2, k1z1 = k1z0 + k1w + 0.1;        // K1 boşluğu z 0.2..1.2
     seg(0, k1z0, 0, H);
     seg(k1z0, k1z1, k1h + 0.05, H);                    // K1 üstü
-    seg(k1z1, Lt, 0, H);                               // vestiyer doğu duvarı (eski kapı örüldü)
-    // cam bant (vestiyer, üst şerit)
-    const gb = D.glazing_band_mm;
-    const gz0 = 1.55, gz1 = gz0 + gb.width * mm;   // kule üstü, güney uç — nişle çakışmaz
-    const gy0 = gb.sill_level * mm;                    // FFL üstü iç kot = 2.0
-    east.children.pop();                               // son segmenti cam bantlı yeniden kur
-    seg(k1z1, gz0, 0, H);
-    seg(gz0, gz1, 0, gy0); seg(gz0, gz1, gy0 + gb.height * mm, H);
-    seg(gz1, Lt, 0, H);
-    east.add(box(0.02, gb.height * mm, gb.width * mm, new THREE.MeshPhysicalMaterial({
-      color: COL.glass, transparent: true, opacity: 0.45, roughness: 0.1 }),
-      W + wallT / 2, gy0 + gb.height * mm / 2, (gz0 + gz1) / 2, 'cam-bant'));
+    seg(k1z1, Lt, 0, H);                               // vestiyer doğu duvarı — DOLU
+    // Faz 4.2: cam bant İPTAL (Emre işareti 'cam yok') — doğu duvar tamamen örülü
     interior.add(east);
 
     // ---- K1 kapısı (sahanlık doğu): kasa + eşik + camlı alu kanat ----
@@ -540,136 +530,177 @@ export async function initViewer(container, statusEl, TXT) {
     interior.userData.navKureler = navKureler;
   }
 
-  // ============ DIŞ CEPHE (ev bağlamıyla) ============
+  // ============ DIŞ CEPHE — AVLU GB KÖŞESİ (2006 planı + gerçek fotoğraf, Faz 4.2) ============
+  // Koordinat: x=doğu, z=kuzey. z=0 GÜNEY CEPHE düzlemi (avlu girintisinin güney
+  // duvarı, kuzeye bakar); x=0 kiler/abri doğu yüzü. Avlu girintisi 6.00 geniş,
+  // 9.20 derin (2006 planı). Fotoğraf bakışı: avludan GB köşesine.
+  // Kompozisyon: solda(batı) garaj/abri kanadı + KARANLIK ABRİ GÖZÜ ve beyaz köşe
+  // direği; ortada PORÇ kütlesi (+1.215 sahanlık) ve cepheye PARALEL, doğudan
+  // batıya çıkan mevcut merdiven (duvara monte küpeşte); sağda ana kütle.
+  // Kurgusal niş/cam bant/yeşil kapı/veranda korkuluğu YOK. Sonra'da TEK kapı K1.
   const exterior = grp('dis-cephe');
   {
-    const wallH = 3.4, faceZ = 0;
-    const bayX0 = 0.05, bayX1 = 2.65;
-    const landY = D.stair.total_rise_mm * mm;          // 1.215 (9×135, temsili)
-    const stX0 = 0.07, stX1 = 1.17;
+    const wallH = 3.05;                                    // saçak altı (temsili)
+    const landY = D.stair.total_rise_mm * mm;              // +1.215 porç kotu (temsili)
+    const encE = 2.80;                                     // kapama doğu duvar düzlemi (K1 duvarı)
+    const encN = 2.70;                                     // kapama kuzey sınırı (direk hizası, 2006: 9.20-6.50)
+    const cream = m(COL.cream, { roughness: 0.9 });
+    const koyu = m(0x453a33, { roughness: 1 });
 
-    const ground = new THREE.Mesh(new THREE.PlaneGeometry(20, 16), m(COL.ground, { roughness: 1 }));
-    ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true;
-    ground.name = 'zemin-bahce';
+    const ground = new THREE.Mesh(new THREE.PlaneGeometry(30, 24), m(COL.ground, { roughness: 1 }));
+    ground.rotation.x = -Math.PI / 2; ground.position.set(3.0, 0, 4.5);
+    ground.receiveShadow = true;
+    ground.name = 'zemin-avlu';
     exterior.add(ground);
-    // (Faz 4.1) z=3.9'daki 20×1.7 "kaldırım şeridi" kaldırıldı: hiçbir gerçek
-    // nesneye karşılık gelmiyordu ve zeminde kimliksiz dikdörtgen okunuyordu.
 
-    exterior.add(box(4.35, wallH, 0.3, m(COL.cream), bayX0 - 4.35 / 2, wallH / 2, faceZ, 'cephe-zemin-kat-sol'));
-    exterior.add(box(1.9, wallH, 0.3, m(COL.cream), bayX1 + 0.95, wallH / 2, faceZ, 'cephe-zemin-kat-sag'));
+    // ---- BATI KANADI: garaj + abri voiture (avlunun batı kenarı boyunca) ----
+    const solKanat = grp('kanat-garaj-abri');
+    solKanat.add(box(3.05, 2.75, 9.2, cream, -1.875, 1.375, 4.6, 'kanat-govde'));       // gövde x -3.4..-0.35
+    // doğu yüzü: abri gözü açıklığı (z 2.95..5.55) + lento + dolu parçalar
+    solKanat.add(box(0.35, 2.75, 2.95, cream, -0.175, 1.375, 1.475, 'kanat-dogu-guney'));
+    solKanat.add(box(0.35, 2.75, 3.65, cream, -0.175, 1.375, 7.375, 'kanat-dogu-kuzey'));
+    solKanat.add(box(0.35, 0.45, 2.60, cream, -0.175, 2.525, 4.25, 'abri-lento'));
+    solKanat.add(box(3.1, 2.55, 2.56, koyu, -1.63, 1.275, 4.25, 'abri-ic-karanlik'));    // karanlık göz
+    solKanat.add(box(0.14, 0.16, 3.3, m(0xe8ddc8, { roughness: 0.85 }), -0.07, 2.83, 4.25, 'kanat-genoise'));
+    const rtL = roofTexture(); rtL.repeat.set(3.4, 2.6);
+    const kanatCati = new THREE.Mesh(new THREE.BoxGeometry(3.9, 0.09, 9.6),
+      new THREE.MeshStandardMaterial({ map: rtL, roughness: 0.9 }));
+    kanatCati.position.set(-1.8, 3.12, 4.6);
+    kanatCati.rotation.z = 0.20;
+    kanatCati.name = 'kanat-cati';
+    solKanat.add(kanatCati);
+    exterior.add(solKanat);
 
-    exterior.add(box(8.85, 2.1, 0.34, m(COL.cream), 0.15, wallH + 1.05, faceZ + 0.02, 'cephe-ust-kat'));
-    for (const wx of [-3.0, -1.1, 1.5]) {
-      const win = shutterWindow(0.85, 1.25);
-      win.position.set(wx, wallH + 1.05, faceZ + 0.2);
-      exterior.add(win);
+    // ---- beyaz köşe direği (2006 planındaki poteau; fotoğraftaki beyaz kolon) ----
+    exterior.add(box(0.26, 2.46, 0.26, m(0xf6f2e8, { roughness: 0.7 }), 0.16, 1.23, 2.62, 'porc-kose-diregi'));
+
+    // ---- GÜNEY CEPHE (z=0 düzlemi, kuzeye bakar) + saçak + ana çatı ----
+    exterior.add(box(6.05, wallH, 0.30, cream, 3.0, wallH / 2, -0.15, 'cephe-guney'));
+    exterior.add(box(6.4, 0.22, 0.42, m(0xe8ddc8, { roughness: 0.85 }), 3.1, wallH + 0.11, -0.10, 'genoise-sacak'));
+    const rtA = roofTexture(); rtA.repeat.set(7, 2.4);
+    const anaCati = new THREE.Mesh(new THREE.BoxGeometry(6.9, 0.1, 3.6),
+      new THREE.MeshStandardMaterial({ map: rtA, roughness: 0.9 }));
+    anaCati.position.set(3.1, wallH + 0.98, -1.7);
+    anaCati.rotation.x = 0.42;
+    anaCati.name = 'ana-cati';
+    exterior.add(anaCati);
+
+    // ---- ANA KÜTLE DOĞU (salle-de-jeu bloğu; avlunun doğu kenarı) ----
+    const anaDogu = grp('ana-kutle-dogu');
+    anaDogu.add(box(6.0, wallH, 9.2, cream, 9.0, wallH / 2, 4.6, 'dogu-blok-govde'));
+    anaDogu.add(box(0.14, 0.16, 9.3, m(0xe8ddc8, { roughness: 0.85 }), 5.95, wallH + 0.06, 4.6, 'dogu-blok-genoise'));
+    const rtD = roofTexture(); rtD.repeat.set(6.5, 9);
+    const doguCati = new THREE.Mesh(new THREE.BoxGeometry(6.8, 0.1, 9.9),
+      new THREE.MeshStandardMaterial({ map: rtD, roughness: 0.9 }));
+    doguCati.position.set(9.15, wallH + 1.05, 4.6);
+    doguCati.rotation.z = -0.30;
+    doguCati.name = 'dogu-blok-cati';
+    anaDogu.add(doguCati);
+    exterior.add(anaDogu);
+
+    // ---- PORÇ KÜTLESİ: +1.215 mevcut sahanlık (masif taban, Önce+Sonra ortak) ----
+    exterior.add(box(encE, landY, encN, m(COL.stone, { roughness: 0.95 }), encE / 2, landY / 2, encN / 2, 'porc-platform'));
+
+    // ---- porç sundurması (ahşap saçaklı kiremit çatı; K1+tavan kotu için Sonra'da
+    //      yenilenecek varsayımıyla TEK ortak çatı — rapor C6) ----
+    const porcCati = grp('porc-sundurmasi');
+    const rtP = roofTexture(); rtP.repeat.set(2.6, 2.2);
+    const pc = new THREE.Mesh(new THREE.BoxGeometry(3.3, 0.08, 3.06),
+      new THREE.MeshStandardMaterial({ map: rtP, roughness: 0.9 }));
+    pc.position.set(1.45, 3.46, 1.38); pc.rotation.x = 0.215; pc.name = 'porc-cati';
+    porcCati.add(pc);
+    porcCati.add(box(3.3, 0.07, 0.09, m(0x6e5335, { roughness: 0.9 }), 1.45, 3.06, 2.88, 'porc-sacak-tahtasi'));
+    for (let i = 0; i < 5; i++) {
+      porcCati.add(box(0.055, 0.075, 2.9, m(0x6e5335, { roughness: 0.9 }),
+        0.35 + i * 0.6, 3.17 - 0.02 * i, 1.42, 'porc-merteği'));
     }
-    const winG = shutterWindow(0.85, 1.25);
-    winG.position.set(-3.1, 1.95, faceZ + 0.16);
-    exterior.add(winG);
+    exterior.add(porcCati);
 
-    const rt = roofTexture(); rt.repeat.set(8, 2);
-    const roof = new THREE.Mesh(new THREE.BoxGeometry(9.4, 0.1, 2.6),
-      new THREE.MeshStandardMaterial({ map: rt, roughness: 0.9 }));
-    roof.position.set(0.15, wallH + 2.1 + 0.58, faceZ - 0.74);
-    roof.rotation.x = 0.42;
-    roof.name = 'cati-kiremit';
-    exterior.add(roof);
-    exterior.add(box(9.4, 0.2, 0.14, m(0xe7e0d0), 0.15, wallH + 2.02, faceZ + 0.3, 'sacak-oluk'));
-    const roof2 = new THREE.Mesh(new THREE.BoxGeometry(7.6, 0.34, 1.5),
-      new THREE.MeshStandardMaterial({ map: rt.clone(), roughness: 0.9 }));
-    roof2.material.map.repeat.set(6, 1);
-    roof2.position.set(0.4, wallH + 0.1, faceZ + 0.32);
-    roof2.rotation.x = 0.12;
-    roof2.name = 'sundurma-cati-bandi';
-    exterior.add(roof2);
-
-    exterior.add(box(2.95, landY, 0.72, m(COL.stone, { roughness: 0.95 }), -0.31, landY / 2, 0.36, 'veranda-platform'));
-    const hd = grp('kapi-ev-giris-mevcut');
-    hd.add(box(1.02, 2.18, 0.06, m(0xffffff, { roughness: 0.6 }), 0, 1.09, 0, 'ev-giris-kasa'));
-    hd.add(box(0.9, 2.06, 0.07, m(COL.houseDoor, { roughness: 0.55 }), 0, 1.03, 0.01, 'ev-giris-kanat'));
-    hd.add(box(0.02, 0.24, 0.03, m(COL.brass, { metalness: 0.75, roughness: 0.3 }), 0.32, 1.02, 0.06, 'ev-giris-kol'));
-    hd.position.set(-1.0, landY, faceZ + 0.16);
-    exterior.add(hd);
-
-    // TEK mevcut merdiven (Rev B kuralı) — basamak sayısı dimensions'tan, temsili
+    // ---- MEVCUT MERDİVEN: cepheye PARALEL, avludan (doğudan) BATIYA çıkar ----
+    // (gerçek fotoğraf + Emre yorumu; 2006 planı dik çiziyordu -> çelişki C2.
+    //  temsili 9 basamak; duvara monte küpeşte fotoğraftaki gibi)
     const st = grp('merdiven-mevcut-temsili');
     const nR = D.stair.risers;
+    const g = D.stair.going_mm * mm, r = D.stair.riser_mm * mm;
     for (let i = 0; i < nR; i++) {
-      st.add(box(1.1, (D.stair.riser_mm * mm) * (i + 1), D.stair.going_mm * mm, m(0xd6cfc2),
-        0.62, (D.stair.riser_mm * mm) * (i + 1) / 2,
-        0.86 + (nR - 1 - i) * (D.stair.going_mm * mm), 'basamak'));
+      st.add(box(g + 0.02, r * (i + 1), 1.18, m(0xd9d2c2, { roughness: 0.9 }),
+        encE + (nR - 1 - i) * g + g / 2, r * (i + 1) / 2, 0.75, 'basamak'));
     }
     exterior.add(st);
-    exterior.add(railing(stX0 - 0.02, landY, 0.86, 3.02, -0.5));
-    exterior.add(railing(stX1 + 0.02, landY, 0.86, 3.02, -0.5));
-    exterior.add(railing(-1.72, landY, 0.06, 0.68, 0));
+    // duvara monte küpeşte — güney cephe yüzünde eğimli boru
+    const kup = grp('kupeste-duvar');
+    const kupM = m(COL.iron, { metalness: 0.5, roughness: 0.4 });
+    const kx0 = encE + 0.15, kx1 = encE + (nR - 1) * g + 0.15;
+    const ky0 = landY + 0.90, ky1 = 0.90 + r;
+    const boru = box(Math.hypot(kx1 - kx0, ky1 - ky0), 0.05, 0.05, kupM,
+      (kx0 + kx1) / 2, (ky0 + ky1) / 2, 0.06, 'kupeste-boru');
+    boru.rotation.z = Math.atan2(ky1 - ky0, kx1 - kx0);
+    kup.add(boru);
+    for (const t of [0.15, 0.5, 0.85]) {
+      kup.add(box(0.04, 0.09, 0.10, kupM, kx0 + (kx1 - kx0) * t, ky0 + (ky1 - ky0) * t - 0.05, 0.02, 'kupeste-konsol'));
+    }
+    exterior.add(kup);
 
-    // --- ÖNCE: açık göz ---
+    // --- ÖNCE: açık sundurma — X'li parmaklıklı pencere (kiler doğu duvarı),
+    //     İPTAL eski yan kapı (cephede, merdiven başı) ve abri gözünde konteynerler ---
     const before = grp('cephe-once-acik-goz');
-    const bd = m(COL.bayDark, { roughness: 1 });
-    before.add(box(bayX1 - bayX0, wallH, 0.08, bd, (bayX0 + bayX1) / 2, wallH / 2, -1.46, 'goz-arka-duvar'));
-    before.add(box(0.08, wallH, 1.5, bd, bayX0 + 0.04, wallH / 2, -0.75, 'goz-yan-duvar'));
-    before.add(box(0.08, wallH, 1.5, bd, bayX1 - 0.04, wallH / 2, -0.75, 'goz-yan-duvar'));
-    before.add(box(bayX1 - bayX0, 0.1, 1.5, bd, (bayX0 + bayX1) / 2, wallH - 0.05, -0.75, 'goz-tavan'));
-    before.add(box(bayX1 - bayX0, 0.3, 1.5, m(0x6a5c50, { roughness: 1 }), (bayX0 + bayX1) / 2, 0.15, -0.75, 'goz-taban-030'));
-    before.add(box(0.5, 0.62, 0.5, m(0x2f6e4f, { roughness: 0.7 }), 1.15, 0.61, -0.95, 'cop-konteyner'));
-    before.add(box(0.5, 0.62, 0.5, m(0x8a8d20, { roughness: 0.7 }), 1.80, 0.61, -0.60, 'cop-konteyner'));
-    const bw = grp('pencere-parmaklikli');
-    bw.add(box(0.66, 0.56, 0.04, m(0xe8e8e8, { roughness: 0.7 }), 0, 0, 0, 'parmaklik-pencere-cam'));
-    for (let i = 0; i < 3; i++) bw.add(box(0.03, 0.56, 0.05, m(COL.iron), -0.18 + i * 0.18, 0, 0.01, 'parmaklik-demir'));
-    bw.position.set(2.05, 1.9, -1.42);
+    const bw = grp('pencere-parmaklikli');               // X işaretli — örülecek
+    bw.add(box(0.05, 0.70, 0.80, m(0xececec, { roughness: 0.7 }), 0, 0, 0, 'parmaklik-pencere-cam'));
+    for (let i = 0; i < 4; i++) bw.add(box(0.055, 0.70, 0.028, m(COL.iron), 0.01, 0, -0.27 + i * 0.18, 'parmaklik-demir'));
+    bw.position.set(0.035, 2.0, 1.35);                   // kiler doğu duvarında, sundurma içine bakar
     before.add(bw);
+    // eski yan kapı (bugünkü camlı giriş; İPTAL -> Sonra'da örülü, yalnız ÖNCE'de)
+    const eskiKapi = grp('kapi-eski-yan-iptal');
+    eskiKapi.add(box(1.04, 2.16, 0.05, m(0xffffff, { roughness: 0.6 }), 2.36, landY + 1.08, 0.03, 'eski-kapi-kasa'));
+    eskiKapi.add(box(0.92, 2.05, 0.06, m(0x8a94a0, { roughness: 0.35, metalness: 0.2 }), 2.36, landY + 1.025, 0.045, 'eski-kapi-kanat'));
+    before.add(eskiKapi);
+    before.add(box(0.5, 0.66, 0.5, m(0x2f6e4f, { roughness: 0.7 }), -0.38, 0.33, 3.55, 'cop-konteyner'));
+    before.add(box(0.5, 0.66, 0.5, m(0x4b4f55, { roughness: 0.7 }), -0.34, 0.33, 4.25, 'cop-konteyner'));
+    before.add(box(0.09, 0.10, 0.5, m(0xd8c928, { roughness: 0.6 }), -0.34, 0.71, 4.25, 'cop-konteyner-kapak'));
     exterior.add(before);
 
-    // --- SONRA: sıvalı dolgu duvarı (kapısız — giriş K1'den) + cam bant + menfezler + K1 ---
+    // --- SONRA: sundurma kapatıldı (sıvalı yeni duvarlar, CAM BANT YOK, pencere ve
+    //     eski kapı örülü) — cephede TEK kapı K1, merdiven başında doğuya bakar ---
     const after = grp('cephe-sonra-kapali');
-    after.add(box(bayX1 - bayX0, wallH, 0.3, m(COL.render), (bayX0 + bayX1) / 2, wallH / 2, faceZ, 'dolgu-duvar-sivali'));
-    // cam bant (iç doğu duvardaki 1000×450 sabit camın cephe izi): ÇERÇEVELİ ve
-    // gerçek kotunda (FFL +1.25 üstü +2.0) — kimliksiz yüzen dikdörtgen değil.
-    const camBantIzi = grp('cam-bant-cephe');
-    // gerçek kot FFL(+1.25)+2.0 = ~3.25..3.70; stilize duvar 3.4 olduğundan bandın
-    // üstü duvar içinde kalacak şekilde kelepçelenir (illüstratif cephe)
-    const cbY = Math.min(
-      landY + (D.glazing_band_mm.sill_level * mm) + (D.glazing_band_mm.height * mm) / 2,
-      wallH - 0.30);
-    camBantIzi.add(box(1.0 + 0.08, 0.45 + 0.08, 0.05, m(0xffffff, { roughness: 0.6 }), 0, 0, 0, 'cam-bant-kasa'));
-    camBantIzi.add(box(1.0, 0.45, 0.06, new THREE.MeshPhysicalMaterial({
-      color: COL.glass, transparent: true, opacity: 0.5, roughness: 0.1 }), 0, 0, 0.01, 'cam-bant-cam'));
-    camBantIzi.position.set(1.7, cbY, faceZ + 0.16);
-    after.add(camBantIzi);
-    after.add(box(0.22, 0.1, 0.05, m(0x8a93a3), 1.8, 0.22, faceZ + 0.17, 'havalandirma-menfez'));
-    after.add(box(0.22, 0.1, 0.05, m(0x8a93a3), 2.35, 0.22, faceZ + 0.17, 'havalandirma-menfez'));
-
-    // K1: merdiven başı sahanlık kapısı
+    const rD = m(COL.render);
+    const k1z0e = 0.20, k1z1e = 1.20;                    // K1 boşluğu (iç modelle aynı: z 0.2..1.2)
+    // doğu duvarı (x=encE..encE+0.24): K1 açıklığı bırakılarak
+    after.add(box(0.24, 3.42, k1z0e, rD, encE + 0.12, 1.71, k1z0e / 2, 'kapama-dogu-guney'));
+    after.add(box(0.24, 3.42 - (landY + 2.13), k1z1e - k1z0e, rD, encE + 0.12, (landY + 2.13 + 3.42) / 2, (k1z0e + k1z1e) / 2, 'kapama-dogu-lento'));
+    after.add(box(0.24, landY, k1z1e - k1z0e, rD, encE + 0.12, landY / 2, (k1z0e + k1z1e) / 2, 'kapama-dogu-esik-alti'));
+    after.add(box(0.24, 3.10, encN - k1z1e, rD, encE + 0.12, 1.55, (k1z1e + encN) / 2, 'kapama-dogu-kuzey'));
+    // kuzey duvarı (z=encN): 2 menfezli
+    after.add(box(encE + 0.24, 2.72, 0.24, rD, (encE + 0.24) / 2, 1.36, encN - 0.12, 'kapama-kuzey'));
+    after.add(box(0.22, 0.10, 0.05, m(0x8a93a3), 0.65, 0.42, encN + 0.01, 'havalandirma-menfez'));
+    after.add(box(0.22, 0.10, 0.05, m(0x8a93a3), 2.05, 0.42, encN + 0.01, 'havalandirma-menfez'));
+    // eski kapı + X'li pencere örülü: kapama içinde kaldı (S-01'de örgü taraması) ✓
+    // K1: doğu duvarında, kanat DOĞUYA (gelen merdivene) bakar — cephede TEK kapı
     const d3 = grp('kapi-K1-dis');
     const aluM = m(COL.alu, { metalness: 0.55, roughness: 0.4 });
-    const l3w = k1w;                                   // 0.90 (dimensions'tan)
-    const j3 = (stX1 - stX0 - l3w) / 2;
-    d3.add(box(j3, 2.2, 0.1, aluM, stX0 + j3 / 2, landY + 1.1, 0.78, 'K1-dis-kasa'));
-    d3.add(box(j3, 2.2, 0.1, aluM, stX1 - j3 / 2, landY + 1.1, 0.78, 'K1-dis-kasa'));
-    d3.add(box(stX1 - stX0, 0.06, 0.1, aluM, (stX0 + stX1) / 2, landY + 2.17, 0.78, 'K1-dis-kasa-ust'));
-    d3.add(box(l3w, 0.02, 0.12, m(COL.alu, { metalness: 0.7, roughness: 0.35 }),
-      (stX0 + stX1) / 2, landY + 0.01, 0.78, 'K1-dis-esik'));
+    const xF = encE + 0.30;                              // kasa dış yüzü
+    d3.add(box(0.10, 2.2, 0.06, aluM, xF - 0.05, landY + 1.1, k1z0e + 0.03, 'K1-dis-kasa'));
+    d3.add(box(0.10, 2.2, 0.06, aluM, xF - 0.05, landY + 1.1, k1z1e - 0.03, 'K1-dis-kasa'));
+    d3.add(box(0.10, 0.06, k1z1e - k1z0e, aluM, xF - 0.05, landY + 2.17, (k1z0e + k1z1e) / 2, 'K1-dis-kasa-ust'));
+    d3.add(box(0.12, 0.02, k1z1e - k1z0e, m(COL.alu, { metalness: 0.7, roughness: 0.35 }),
+      xF - 0.05, landY + 0.01, (k1z0e + k1z1e) / 2, 'K1-dis-esik'));
     const k1PivotExt = grp('kapi-K1-dis-kanat-pivot');
-    k1PivotExt.position.set(stX1 - j3, landY, 0.78);   // KUZEY kasa — iç sahneyle aynı yaka
-    const leafExt = aluGlazedLeaf(l3w, 2.12);
-    leafExt.rotation.y = Math.PI;                       // kanat pivottan güneye uzanır
-    leafExt.position.x = 0;
+    k1PivotExt.position.set(xF - 0.04, landY, k1z1e - 0.05); // KUZEY kasa (iç modelle aynı yaka)
+    const leafExt = aluGlazedLeaf(k1w, 2.12);
+    leafExt.rotation.y = Math.PI / 2;                    // kanat pivottan güneye (-z), DOĞUYA bakar
     k1PivotExt.add(leafExt);
     d3.add(k1PivotExt);
     after.add(d3);
-
     exterior.add(after);
+
     exterior.userData.before = before;
     exterior.userData.after = after;
     exterior.userData.k1PivotExt = k1PivotExt;
 
-    const sun = new THREE.DirectionalLight(0xfff4e0, 2.6);
-    sun.position.set(5, 9, 7); sun.castShadow = true;
+    const sun = new THREE.DirectionalLight(0xfff4e0, 2.4);
+    sun.position.set(8, 10, 11); sun.castShadow = true;
     sun.shadow.mapSize.set(1024, 1024);
     exterior.add(sun);
-    exterior.add(new THREE.HemisphereLight(0xd8e6f2, 0x8a7f6a, 0.9));
+    exterior.add(new THREE.HemisphereLight(0xd8e6f2, 0x8a7f6a, 0.95));
   }
 
   scene.add(interior);
@@ -917,9 +948,9 @@ export async function initViewer(container, statusEl, TXT) {
       outsideWanted = p.out;
       scene.background = new THREE.Color(0x2e2a26);
     } else {
-      camera.fov = 58; camera.updateProjectionMatrix();
-      camera.position.set(1.4, 2.9, 8.6);
-      controls.target.set(0.1, 2.0, 0.2);
+      camera.fov = 62; camera.updateProjectionMatrix();
+      camera.position.set(4.9, 2.6, 8.4);               // avlu içinden GB köşesine — foto bakışı
+      controls.target.set(1.5, 1.3, 1.3);
       scene.background = new THREE.Color(0xcfdbe6);
       exterior.userData.before.visible = !facadeAfter;
       exterior.userData.after.visible = facadeAfter;
@@ -976,7 +1007,7 @@ export async function initViewer(container, statusEl, TXT) {
     interior.userData.vPivot.rotation.y = Math.PI + vAnim * (Math.PI / 2) * 0.978;
     k1Anim += (k1Target - k1Anim) * Math.min(1, dt * 3.2);
     interior.userData.k1Pivot.rotation.y = k1Anim * (Math.PI / 2) * 0.96;      // 86.4° ≥ 85 kuralı
-    exterior.userData.k1PivotExt.rotation.y = -k1Anim * (Math.PI / 2) * 0.96;  // sahanlığa İÇE
+    exterior.userData.k1PivotExt.rotation.y = k1Anim * (Math.PI / 2) * 0.96;   // sahanlığa (batıya) İÇE
     // nav küreleri hafif nabız (fark edilebilirlik)
     panoT += dt;
     const ps = 1 + 0.07 * Math.sin(panoT * 2.6);

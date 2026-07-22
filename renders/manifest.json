@@ -14,34 +14,34 @@
    "uretici": "gemini-3-pro-image"
   },
   {
-   "ad": "ic_ayna_v_acik",
-   "model_kare": "ic_ayna_v_acik_model.png",
-   "foto": "ic_ayna_v_acik_foto.png",
-   "uretici": "gemini-3-pro-image"
-  },
-  {
    "ad": "ic_kus",
    "model_kare": "ic_kus_model.png",
    "foto": "ic_kus_foto.png",
    "uretici": "gemini-3-pro-image"
   },
   {
-   "ad": "dis_sonra_on",
-   "model_kare": "dis_sonra_on_model.png",
-   "foto": "dis_sonra_on_foto.png",
+   "ad": "ic_ayna_v_acik",
+   "model_kare": "ic_ayna_v_acik_model.png",
+   "foto": "ic_ayna_v_acik_foto.png",
    "uretici": "gemini-3-pro-image"
   },
   {
-   "ad": "dis_sonra_bati_45",
-   "model_kare": "dis_sonra_bati_45_model.png",
-   "foto": "dis_sonra_bati_45_foto.png",
-   "uretici": "gemini-3-pro-image"
+   "ad": "dis_gercek",
+   "model_kare": "dis_once_gercek_foto.png",
+   "foto": "dis_sonra_gercek_foto.png",
+   "solKey": "render.gercekOnce",
+   "sagKey": "render.gercekSonra",
+   "uretici": "gemini-3-pro-image",
+   "tur": "gercek-cift"
   },
   {
-   "ad": "dis_once_on",
-   "model_kare": "dis_once_on_model.png",
-   "foto": "dis_once_on_foto.png",
-   "uretici": "gemini-3-pro-image"
+   "ad": "dis_gercek_yakin",
+   "model_kare": "dis_once_gercek_yakin_foto.png",
+   "foto": "dis_sonra_gercek_yakin_foto.png",
+   "solKey": "render.gercekOnce",
+   "sagKey": "render.gercekSonra",
+   "uretici": "gemini-3-pro-image",
+   "tur": "gercek-cift"
   }
  ],
  "hatalar": []

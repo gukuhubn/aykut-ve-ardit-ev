@@ -94,15 +94,16 @@ initViewer(document.getElementById('viewer'), durumEl, I18N).then(a => {
     fig.className = 'render-cift';
     const a1 = document.createElement('a'); a1.href = kok + it.model_kare; a1.target = '_blank';
     const i1 = document.createElement('img'); i1.loading = 'lazy'; i1.src = kok + it.model_kare;
-    i1.alt = t('render.model'); a1.append(i1);
+    const solK = it.solKey || 'render.model', sagK = it.sagKey || 'render.foto';
+    i1.alt = t(solK); a1.append(i1);
     const a2 = document.createElement('a'); a2.href = kok + it.foto; a2.target = '_blank';
     const i2 = document.createElement('img'); i2.loading = 'lazy'; i2.src = kok + it.foto;
-    i2.alt = t('render.foto'); a2.append(i2);
+    i2.alt = t(sagK); a2.append(i2);
     const cap = document.createElement('figcaption');
     cap.textContent = t('render.k_' + it.ad);
     const rozet = document.createElement('div');
     rozet.className = 'render-rozet';
-    rozet.innerHTML = `<span>${t('render.model')}</span><span>${t('render.foto')}</span>`;
+    rozet.innerHTML = `<span>${t(solK)}</span><span>${t(sagK)}</span>`;
     fig.append(rozet, a1, a2, cap);
     galeri.append(fig);
   }
