@@ -168,6 +168,13 @@
       "ozet": "Bağımsız gözden geçirme turu: bulunan 17 kusur düzeltildi",
       "ozet_en": "Independent review round: 17 findings fixed",
       "ozet_fr": "Relecture indépendante : 17 points corrigés"
+    },
+    {
+      "milestone": "M28",
+      "date": "22.07.2026",
+      "ozet": "Faz 4.1: portal kalıcı adreste yayında (gukuhubn.github.io/aykut-ve-ardit-ev); geometri denetimi kuruldu — kapı/kapak hataları düzeltildi, sıfır bulgu; 360° gezinme ve fotoreal galeri eklendi",
+      "ozet_en": "Phase 4.1: portal live at its permanent address (gukuhubn.github.io/aykut-ve-ardit-ev); geometry lint set up — door/front defects fixed, zero findings; 360° walk-around and photoreal gallery added",
+      "ozet_fr": "Phase 4.1 : portail en ligne à son adresse permanente (gukuhubn.github.io/aykut-ve-ardit-ev) ; contrôle géométrique en place — défauts de portes corrigés, zéro constat ; visite 360° et galerie photoréaliste ajoutées"
     }
   ]
 }
